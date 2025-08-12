@@ -8,7 +8,8 @@ export default function Home() {
   const handleOpen = () => setIsOpen(true);
 
   return (
-    <main className="min-h-screen bg-sky-100 p-8">
+    <main className="min-h-screen p-8 relative">
+      <div className="galaxy-background"></div>
       <div className="h-[380px]">
         <div
           id="envelope"
@@ -17,7 +18,7 @@ export default function Home() {
           role="button"
           tabIndex={0}
           aria-label="Envelope interativo"
-          className={`relative w-[280px] h-[180px] mx-auto top-[150px] bg-sky-900 rounded-b-[6px] shadow-lg cursor-pointer ${
+          className={`relative w-[280px] h-[180px] mx-auto top-[150px] bg-emerald-900/90 rounded-b-[6px] shadow-lg cursor-pointer backdrop-blur-sm ${
             isOpen ? "envelope-open" : "envelope-close"
           }`}
         >
@@ -27,13 +28,13 @@ export default function Home() {
               border-l-[140px] border-r-[140px] border-solid
               border-l-transparent border-r-transparent
               border-b-[82px] border-t-[98px]
-              border-b-transparent border-t-sky-900
+              border-b-transparent border-t-emerald-900
               origin-top ${isOpen ? "envelope-flap-open" : "envelope-flap-close"}
             `}
             ></div>
           </div>
           <div className="front pocket absolute w-0 h-0 z-30">
-            <div className="border-l-[140px] border-r-[140px] border-solid border-l-sky-700 border-r-sky-700 border-b-[90px] border-t-[90px] border-b-sky-800 border-t-transparent rounded-b-[6px]"></div>
+            <div className="border-l-[140px] border-r-[140px] border-solid border-l-emerald-700 border-r-emerald-700 border-b-[90px] border-t-[90px] border-b-emerald-800 border-t-transparent rounded-b-[6px]"></div>
           </div>
           <div
             className={`
@@ -70,9 +71,9 @@ export default function Home() {
       <div className="text-center">
         <button
           onClick={handleOpen}
-          className="font-extrabold transition-all duration-100 bg-transparent border-2 border-sky-700 rounded-md 
-                   text-sky-700 text-sm uppercase m-[5px] p-[10px] min-w-[120px] cursor-pointer
-                   hover:bg-sky-700 hover:text-white"
+          className="font-extrabold transition-all duration-100 bg-transparent border-2 border-emerald-400 rounded-md 
+                   text-emerald-400 text-sm uppercase m-[5px] p-[10px] min-w-[120px] cursor-pointer
+                   hover:bg-emerald-400 hover:text-black backdrop-blur-sm"
         >
           Abrir Carta
         </button>
