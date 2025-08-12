@@ -1,15 +1,126 @@
 @import "tailwindcss";
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Envelope animations */
+.envelope-flap-open {
+  transform: rotateX(180deg);
+  transition: transform 0.4s ease;
+  z-index: 10;
+}
+
+.envelope-flap-close {
+  transform: rotateX(0deg);
+  transition: transform 0.4s 0.6s ease;
+  z-index: 40;
+}
+
+.envelope-letter-close {
+  transform: translateY(0px);
+  transition: transform 0.4s ease;
+  z-index: 5;
+}
+
+.envelope-letter-open {
+  transform: translateY(-60px);
+  transition: transform 0.4s 0.6s ease;
+  z-index: 20;
+}
+
+.letter::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-image: linear-gradient(180deg, 
+    rgba(255,255,255,0.00) 25%, 
+    rgba(215,227,239,0.70) 55%, 
+    rgba(215,227,239,1.00) 100%);
+}
+
+/* Heart styles */
+.heart {
+  pointer-events: none;
+  width: 50px;
+  height: 80px;
+}
+
+.heart::before,
+.heart::after {
+  position: absolute;
+  content: "";
+  left: 50px;
+  top: 0;
+  width: 50px;
+  height: 80px;
+  background: #D00000;
+  border-radius: 50px 50px 0 0;
+  transform: rotate(-45deg);
+  transform-origin: 0 100%;
+  pointer-events: none;
+}
+
+.heart::after {
+  left: 0;
+  transform: rotate(45deg);
+  transform-origin: 100% 100%;
+}
+
+.a1 {
+  left: 20%;
+  transform: scale(0.6);
+}
+
+.a2 {
+  left: 55%;
+  transform: scale(1);
+}
+
+.a3 {
+  left: 10%;
+  transform: scale(0.8);
+}
+
+@keyframes slideUp {
+  0% { 
+    top: 0;
+  }
+  100% { 
+    top: -600px;
+  }
+}
+
+@keyframes sideSway {
+  0% {
+    margin-left: 0px;
+  }
+  100% {
+    margin-left: 50px;
+  }
+}
+
+.animate-heart1 {
+  animation: slideUp 4s linear 1 forwards 0.7s,
+             sideSway 2s ease-in-out 4 alternate;
+}
+
+.animate-heart2 {
+  animation: slideUp 5s linear 1 forwards 0.7s,
+             sideSway 4s ease-in-out 2 alternate;
+}
+
+.animate-heart3 {
+  animation: slideUp 7s linear 1 forwards 0.7s,
+             sideSway 2s ease-in-out 6 alternate;
 }
 
 @media (prefers-color-scheme: dark) {
