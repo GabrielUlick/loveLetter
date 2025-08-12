@@ -9,7 +9,11 @@ export default function Home() {
 
   return (
     <main className="min-h-screen p-8 relative">
-      <div className="galaxy-background"></div>
+      <div className="galaxy-background">
+        <div className="stars-1"></div>
+        <div className="stars-2"></div>
+        <div className="stars-3"></div>
+      </div>
       <div className="h-[380px]">
         <div
           id="envelope"
