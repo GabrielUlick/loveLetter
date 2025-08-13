@@ -1,14 +1,40 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const router = useRouter();
 
   const handleOpen = () => setIsOpen(true);
 
+  const [isFading, setIsFading] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      // Espera a carta subir do envelope
+      const timer = setTimeout(() => {
+        // Inicia a transição da carta
+        setIsTransitioning(true);
+        
+        // Inicia o fade out após a carta crescer
+        setTimeout(() => {
+          setIsFading(true);
+          // Redireciona após o fade out
+          setTimeout(() => {
+            router.push("/carta");
+          }, 1000); // Tempo do fade out
+        }, 2000); // Tempo da carta crescer
+      }, 4000); // Tempo para os corações subirem
+
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen, router]);
+
   return (
-    <main className="min-h-screen p-8 relative">
+    <main className="min-h-screen p-8 relative overflow-hidden">
       <div className="galaxy-background">
         <div className="stars-1"></div>
         <div className="stars-2"></div>
@@ -24,7 +50,7 @@ export default function Home() {
           aria-label="Envelope interativo"
           className={`relative w-[280px] h-[180px] mx-auto top-[150px] bg-emerald-900/90 rounded-b-[6px] shadow-lg cursor-pointer backdrop-blur-sm ${
             isOpen ? "envelope-open" : "envelope-close"
-          }`}
+          } ${isFading ? 'envelope-fade-out' : ''}`}
         >
           <div className="front flap absolute w-0 h-0 z-10">
             <div
@@ -43,9 +69,9 @@ export default function Home() {
           <div
             className={`
             letter relative bg-white w-[90%] mx-auto h-[90%] top-[5%] 
-            rounded-[6px] shadow-md z-20 ${
-              isOpen ? "envelope-letter-open" : "envelope-letter-close"
-            }
+            rounded-[6px] shadow-md z-20 
+            ${isOpen ? "envelope-letter-open" : "envelope-letter-close"}
+            ${isFading ? 'fade-out-letter' : ''}
           `}
           >
             <div className="words line1 absolute left-[10%] w-[20%] h-[7%] bg-gray-100 top-[15%]"></div>
