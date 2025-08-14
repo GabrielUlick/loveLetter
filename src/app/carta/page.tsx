@@ -4,60 +4,61 @@ import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import GalaxyBackground from '@/components/shared/GalaxyBackground';
 
+// Hoist texto outside the component to keep it stable and avoid hook dependency warnings
+const textoConst = [
+  "Querida,",
+  "Lorem",
+  "ipsum",
+  "dolor",
+  "sit",
+  "amet,",
+  "consectetur",
+  "adipiscing",
+  "elit.",
+  "Sed",
+  "do",
+  "eiusmod",
+  "tempor",
+  "incididunt",
+  "ut",
+  "labore",
+  "et",
+  "dolore",
+  "magna",
+  "aliqua.",
+  "Ut",
+  "enim",
+  "ad",
+  "minim",
+  "veniam,",
+  "quis",
+  "nostrud",
+  "exercitation",
+  "ullamco",
+  "laboris",
+  "nisi",
+  "ut",
+  "aliquip",
+  "ex",
+  "ea",
+  "commodo",
+  "consequat.",
+  "Com amor,",
+  "Seu nome"
+];
+
 const Carta = () => {
   const [visibleWords, setVisibleWords] = useState<number[]>([]);
   const [showButton, setShowButton] = useState(false);
   const router = useRouter();
   
-  const texto = [
-    "Querida,",
-    "Lorem",
-    "ipsum",
-    "dolor",
-    "sit",
-    "amet,",
-    "consectetur",
-    "adipiscing",
-    "elit.",
-    "Sed",
-    "do",
-    "eiusmod",
-    "tempor",
-    "incididunt",
-    "ut",
-    "labore",
-    "et",
-    "dolore",
-    "magna",
-    "aliqua.",
-    "Ut",
-    "enim",
-    "ad",
-    "minim",
-    "veniam,",
-    "quis",
-    "nostrud",
-    "exercitation",
-    "ullamco",
-    "laboris",
-    "nisi",
-    "ut",
-    "aliquip",
-    "ex",
-    "ea",
-    "commodo",
-    "consequat.",
-    "Com amor,",
-    "Seu nome"
-  ];
-
-  const words = useMemo(() => texto.map((w, i) => ({ id: `w-${i}-${w}`, word: w })), []);
+  const words = useMemo(() => textoConst.map((w, i) => ({ id: `w-${i}-${w}`, word: w })), []);
 
   useEffect(() => {
     const revealNextWord = (index: number) => {
-      if (index < texto.length) {
+      if (index < textoConst.length) {
         setVisibleWords(prev => [...prev, index]);
-        const delay = texto[index].length * 50 + 100; // Ajuste o delay baseado no tamanho da palavra
+        const delay = textoConst[index].length * 50 + 100; // Ajuste o delay baseado no tamanho da palavra
         setTimeout(() => revealNextWord(index + 1), delay);
       }
     };
@@ -74,7 +75,7 @@ const Carta = () => {
           <div className="space-y-6 text-center">
             {words.map(({ id, word }, index) => {
               const isTitle = index === 0;
-              const isSignature = index >= texto.length - 2;
+              const isSignature = index >= textoConst.length - 2;
               let fontSize = '1.1rem';
               if (isTitle) {
                 fontSize = '2rem';
@@ -89,7 +90,7 @@ const Carta = () => {
                   className={`typing-text ${visibleWords.includes(index) ? 'visible' : ''}`}
                   style={{ fontSize, fontWeight, display }}
                   onAnimationEnd={() => {
-                    if (index === texto.length - 1) {
+                    if (index === textoConst.length - 1) {
                       setTimeout(() => setShowButton(true), 1000);
                     }
                   }}
@@ -97,11 +98,11 @@ const Carta = () => {
                   {word}
                 </span>
                 {/* Adiciona espaço após cada palavra, exceto em quebras de linha */}
-                {index !== 0 && index < texto.length - 2 && (
+                {index !== 0 && index < textoConst.length - 2 && (
                   <span className="mr-2">{" "}</span>
                 )}
                 {/* Adiciona quebras de linha após o título e antes da assinatura */}
-                {(index === 0 || index === texto.length - 3) && (
+                {(index === 0 || index === textoConst.length - 3) && (
                   <div className="my-8" />
                 )}
                 </span>

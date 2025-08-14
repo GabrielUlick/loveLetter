@@ -13,18 +13,19 @@ interface TimeCount {
   seconds: number;
 }
 
+// Hoist dates so it is stable across renders
+const dates = [
+  { date: new Date('2024-07-04T19:30:00'), label: 'Primeiro Contato' },
+  { date: new Date('2024-09-05T14:00:00'), label: 'Início do Namoro' },
+  { date: new Date('2025-08-01T16:40:00'), label: 'Primeira Viagem' }
+];
+
 const Cronometros = () => {
   const [times, setTimes] = useState<TimeCount[]>([
     { years: 0, months: 0, days: 0, hours: 0, minutes: 0, seconds: 0 },
     { years: 0, months: 0, days: 0, hours: 0, minutes: 0, seconds: 0 },
     { years: 0, months: 0, days: 0, hours: 0, minutes: 0, seconds: 0 }
   ]);
-
-  const dates = [
-    { date: new Date('2024-07-04T19:30:00'), label: 'Primeiro Contato' },
-    { date: new Date('2024-09-05T14:00:00'), label: 'Início do Namoro' },
-    { date: new Date('2025-08-01T16:40:00'), label: 'Primeira Viagem' }
-  ];
 
   const calculateTime = (startDate: Date): TimeCount => {
     const now = new Date();
