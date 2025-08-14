@@ -1,8 +1,14 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
-const GalaxyBackground = () => {
+type Decor = "none" | "hearts" | "petals" | "hearts+petals";
+interface GalaxyBackgroundProps {
+	variant?: "dark" | "light";
+	decor?: Decor;
+}
+
+const GalaxyBackground = ({ variant = "dark", decor = "none" }: GalaxyBackgroundProps) => {
 		const canvasRef = useRef<HTMLCanvasElement | null>(null);
 			// Meteors removed per request
 
@@ -46,7 +52,9 @@ const GalaxyBackground = () => {
 			});
 		};
 
-		for (let i = 0; i < Math.min(maxStars, 500); i++) spawnStar();
+		for (let i = 0; i < Math.min(maxStars, 500); i++) {
+			spawnStar();
+		}
 
 					function clamp(v: number, min: number, max: number) {
 						if (v < min) return min;
@@ -109,10 +117,13 @@ const GalaxyBackground = () => {
 		};
 	}, []);
 
+	const hearts = useMemo(() => Array.from({ length: decor.includes("hearts") ? 16 : 0 }, (_, i) => i), [decor]);
+	const petals = useMemo(() => Array.from({ length: decor.includes("petals") ? 12 : 0 }, (_, i) => i), [decor]);
+
 	return (
-		<div className="galaxy-background" aria-hidden>
+		<div className={`galaxy-background ${variant === "light" ? "light" : ""}`} aria-hidden>
 			{/* Soft drifting nebula clouds */}
-			<div className="nebula-layer" />
+			<div className={`nebula-layer ${variant === "light" ? "light" : ""}`} />
 
 			{/* Twinkling parallax starfields */}
 			<div className="stars-1" />
@@ -121,8 +132,35 @@ const GalaxyBackground = () => {
 			<div className="stars-4" />
 			<div className="stars-5" />
 
-			{/* Canvas-based random sparkle stars for extra density */}
+			{/* Canvas-based random sparkle stars for extra density */
+			}
 			<canvas ref={canvasRef} className="stars-canvas" />
+
+			{/* Optional romantic overlays */}
+			{hearts.length > 0 && (
+				<div className="romance-hearts" aria-hidden>
+					{hearts.map((i) => {
+						const left = `${Math.round(Math.random() * 100)}%`;
+						const delay = `${(Math.random() * 6).toFixed(2)}s`;
+						const dur = `${(7 + Math.random() * 6).toFixed(2)}s`;
+						const size = `${12 + Math.round(Math.random() * 10)}px`;
+						return <span key={`h-${i}`} className="r-heart" style={{ left, ['--delay' as any]: delay, ['--dur' as any]: dur, width: size, height: `calc(${size} * 1.6)` }} />;
+					})}
+				</div>
+			)}
+
+			{petals.length > 0 && (
+				<div className="romance-petals" aria-hidden>
+					{petals.map((i) => {
+						const left = `${Math.round(Math.random() * 100)}%`;
+						const delay = `${(Math.random() * 5).toFixed(2)}s`;
+						const dur = `${(10 + Math.random() * 8).toFixed(2)}s`;
+						const rot = `${Math.round(Math.random() * 360)}deg`;
+						const size = `${14 + Math.round(Math.random() * 12)}px`;
+						return <span key={`p-${i}`} className="petal" style={{ left, ['--delay' as any]: delay, ['--dur' as any]: dur, ['--rot' as any]: rot, width: size, height: `calc(${size} * 1.4)` }} />;
+					})}
+				</div>
+			)}
 
 					{/* Meteors intentionally removed */}
 		</div>

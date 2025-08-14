@@ -68,8 +68,8 @@ const Carta = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#330021] to-black text-pink-100 p-8">
-      <GalaxyBackground />
+    <div className="min-h-screen text-pink-100 p-8">
+      <GalaxyBackground variant="light" decor="hearts+petals" />
       <div className="max-w-2xl mx-auto mt-16 relative z-10 fade-in-up">
         <div className="bg-white/10 backdrop-blur-sm p-8 rounded-lg shadow-xl aero-gloss">
           <div className="space-y-6 text-center">
@@ -116,8 +116,8 @@ const Carta = () => {
             <button
               onClick={() => router.push('/cronometros')}
       className="font-extrabold transition-all duration-300 bg-transparent border-2 
-           border-pink-400 rounded-md text-pink-300 text-lg uppercase 
-           px-8 py-4 cursor-pointer hover:bg-pink-400 hover:text-black 
+           border-pink-300/80 rounded-md text-pink-200 text-lg uppercase 
+           px-8 py-4 cursor-pointer hover:bg-pink-200 hover:text-black 
            backdrop-blur-sm shadow-lg transform hover:scale-105"
             >
               Nossa História em Números

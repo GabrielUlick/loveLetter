@@ -62,10 +62,10 @@ const Cronometros = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#330021] to-black text-pink-100 p-2 sm:p-4 md:p-8">
-      <GalaxyBackground />
+    <div className="min-h-screen text-pink-100 p-2 sm:p-4 md:p-8">
+      <GalaxyBackground variant="light" decor="petals" />
       <div className="max-w-[1200px] mx-auto px-2 sm:px-4">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-center mb-12 sm:mb-16 md:mb-20 text-pink-300 drop-shadow-[0_0_20px_rgba(255,122,182,0.3)]">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-center mb-12 sm:mb-16 md:mb-20 text-pink-200 drop-shadow-[0_0_20px_rgba(255,212,220,0.35)]">
           Nossa História em Números
         </h1>
         <div className="flex flex-col gap-6 sm:gap-8">

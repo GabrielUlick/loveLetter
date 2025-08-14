@@ -16,6 +16,11 @@
   --bg-gradient-start: #330021; /* deep plum */
   --bg-gradient-mid: #1a0b2e;  /* midnight purple */
   --bg-gradient-end: #000000;  /* night */
+
+  /* Light variant for secondary pages */
+  --bg-light-start: #4a0b2c;   /* rose plum */
+  --bg-light-mid: #2a1544;     /* soft indigo */
+  --bg-light-end: #0a0a12;     /* deep space */
 }
 
 /* Envelope animations */
@@ -174,6 +179,10 @@
   /* Romantic dusk gradient with subtle aero vibe */
   background: radial-gradient(ellipse at bottom, var(--bg-gradient-start) 0%, var(--bg-gradient-mid) 50%, var(--bg-gradient-end) 100%);
   overflow: hidden;
+}
+
+.galaxy-background.light {
+  background: radial-gradient(1200px 800px at 50% 100%, var(--bg-light-start) 0%, var(--bg-light-mid) 55%, var(--bg-light-end) 100%);
 }
 
 @keyframes stars {
@@ -351,6 +360,13 @@
   animation: nebula-drift 60s ease-in-out infinite alternate;
 }
 
+.nebula-layer.light {
+  background:
+    radial-gradient(50% 60% at 20% 70%, rgba(255, 179, 215, 0.18), transparent 60%),
+    radial-gradient(40% 55% at 80% 30%, rgba(208, 193, 255, 0.16), transparent 60%),
+    radial-gradient(35% 50% at 50% 50%, rgba(255, 244, 250, 0.12), transparent 65%);
+}
+
 @keyframes nebula-drift {
   0% { transform: translate3d(-2%, 0, 0) scale(1); opacity: 0.7; }
   50% { transform: translate3d(2%, -1%, 0) scale(1.05); opacity: 0.9; }
@@ -424,6 +440,62 @@
   pointer-events: none;
   mix-blend-mode: screen;
   opacity: 0.9;
+}
+
+/* Romantic floating hearts overlay */
+.romance-hearts {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.r-heart {
+  position: absolute;
+  bottom: -10vh;
+  left: 50%;
+  width: 16px;
+  height: 26px;
+  transform: translateX(-50%);
+  animation: float-up-2 var(--dur, 9s) linear var(--delay, 0s) infinite,
+             sway-2 3s ease-in-out var(--delay, 0s) infinite alternate;
+}
+.r-heart::before,
+.r-heart::after {
+  content: "";
+  position: absolute;
+  width: inherit;
+  height: inherit;
+  left: 50%;
+  top: 0;
+  background: #ff5aa8;
+  border-radius: 50% 50% 0 0;
+  transform-origin: 0 100%;
+  transform: translateX(-50%) rotate(-45deg);
+  box-shadow: 0 0 10px rgba(255, 122, 182, 0.6);
+}
+.r-heart::after {
+  transform: translateX(-50%) rotate(45deg);
+}
+
+/* Petals overlay */
+.romance-petals { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.petal {
+  position: absolute;
+  top: -10vh;
+  left: 50%;
+  width: 18px;
+  height: 24px;
+  background: radial-gradient(circle at 30% 30%, #ffd1dc 0%, #ff7ab6 60%, #ff4fa3 100%);
+  border-radius: 60% 60% 60% 0;
+  transform: translateX(-50%) rotate(var(--rot, 0deg));
+  filter: drop-shadow(0 0 6px rgba(255, 122, 182, 0.5));
+  animation: petal-fall var(--dur, 12s) linear var(--delay, 0s) infinite;
+  opacity: 0.9;
+}
+@keyframes petal-fall {
+  0% { transform: translate3d(0, -10vh, 0) rotate(var(--rot, 0deg)); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translate3d(-20vw, 120vh, 0) rotate(calc(var(--rot, 0deg) + 180deg)); opacity: 0; }
 }
 
 @keyframes letter-transition {
