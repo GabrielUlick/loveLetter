@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import GalaxyBackground from "@/components/shared/GalaxyBackground";
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const router = useRouter();
 
   const handleOpen = () => setIsOpen(true);
@@ -13,44 +13,30 @@ export default function Home() {
   const [isFading, setIsFading] = useState(false);
 
   useEffect(() => {
-    if (isOpen) {
-      // Espera a carta subir do envelope
-      const timer = setTimeout(() => {
-        // Inicia a transição da carta
-        setIsTransitioning(true);
-        
-        // Inicia o fade out após a carta crescer
-        setTimeout(() => {
-          setIsFading(true);
-          // Redireciona após o fade out
-          setTimeout(() => {
-            router.push("/carta");
-          }, 1000); // Tempo do fade out
-        }, 2000); // Tempo da carta crescer
-      }, 4000); // Tempo para os corações subirem
-
-      return () => clearTimeout(timer);
-    }
+    if (!isOpen) return;
+    const t1 = setTimeout(() => {
+      // after hearts animation, start fade sequence
+      setTimeout(() => setIsFading(true), 2000);
+      setTimeout(() => router.push("/carta"), 3000);
+    }, 4000);
+    return () => clearTimeout(t1);
   }, [isOpen, router]);
 
   return (
-    <main className="min-h-screen p-8 relative overflow-hidden">
-      <div className="galaxy-background">
-        <div className="stars-1"></div>
-        <div className="stars-2"></div>
-        <div className="stars-3"></div>
-      </div>
+    <main className="min-h-screen p-8 relative overflow-hidden text-pink-100">
+      <GalaxyBackground />
       <div className="h-[380px]">
-        <div
-          id="envelope"
+        <button
           onClick={handleOpen}
-          onKeyDown={(e) => e.key === "Enter" && handleOpen()}
-          role="button"
-          tabIndex={0}
           aria-label="Envelope interativo"
-          className={`relative w-[280px] h-[180px] mx-auto top-[150px] bg-emerald-900/90 rounded-b-[6px] shadow-lg cursor-pointer backdrop-blur-sm ${
+          className="block w-full mx-auto bg-transparent p-0 border-0 outline-none focus:outline-none"
+          style={{ WebkitTapHighlightColor: 'transparent' }}
+        >
+          <div
+          id="envelope"
+          className={`relative w-[280px] h-[180px] mx-auto top-[150px] bg-pink-900/70 rounded-b-[6px] shadow-lg cursor-pointer backdrop-blur-sm ${
             isOpen ? "envelope-open" : "envelope-close"
-          } ${isFading ? 'envelope-fade-out' : ''}`}
+          }`}
         >
           <div className="front flap absolute w-0 h-0 z-10">
             <div
@@ -58,13 +44,13 @@ export default function Home() {
               border-l-[140px] border-r-[140px] border-solid
               border-l-transparent border-r-transparent
               border-b-[82px] border-t-[98px]
-              border-b-transparent border-t-emerald-900
+              border-b-transparent border-t-pink-900
               origin-top ${isOpen ? "envelope-flap-open" : "envelope-flap-close"}
             `}
             ></div>
           </div>
           <div className="front pocket absolute w-0 h-0 z-30">
-            <div className="border-l-[140px] border-r-[140px] border-solid border-l-emerald-700 border-r-emerald-700 border-b-[90px] border-t-[90px] border-b-emerald-800 border-t-transparent rounded-b-[6px]"></div>
+            <div className="border-l-[140px] border-r-[140px] border-solid border-l-pink-700 border-r-pink-700 border-b-[90px] border-t-[90px] border-b-pink-800 border-t-transparent rounded-b-[6px]"></div>
           </div>
           <div
             className={`
@@ -96,14 +82,15 @@ export default function Home() {
               }`}
             ></div>
           </div>
-        </div>
+          </div>
+        </button>
       </div>
       <div className="text-center">
         <button
           onClick={handleOpen}
-          className="font-extrabold transition-all duration-100 bg-transparent border-2 border-emerald-400 rounded-md 
-                   text-emerald-400 text-sm uppercase m-[5px] p-[10px] min-w-[120px] cursor-pointer
-                   hover:bg-emerald-400 hover:text-black backdrop-blur-sm"
+          className="font-extrabold transition-all duration-200 bg-transparent border-2 border-pink-400 rounded-md 
+                   text-pink-300 text-sm uppercase m-[5px] p-[10px] min-w-[120px] cursor-pointer
+                   hover:bg-pink-400 hover:text-black backdrop-blur-sm shadow-[0_0_20px_rgba(255,122,182,0.3)]"
         >
           Abrir Carta
         </button>

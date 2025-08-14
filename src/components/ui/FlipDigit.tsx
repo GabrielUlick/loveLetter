@@ -1,4 +1,3 @@
-// DEPRECATED: use '@/components/ui/FlipDigit' instead. Left for backward-compat if any stray imports exist.
 interface FlipDigitProps {
   value: number;
   label: string;

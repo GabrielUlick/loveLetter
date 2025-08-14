@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import GalaxyBackground from '@/components/shared/GalaxyBackground';
 
 const Carta = () => {
   const [visibleWords, setVisibleWords] = useState<number[]>([]);
@@ -50,6 +51,8 @@ const Carta = () => {
     "Seu nome"
   ];
 
+  const words = useMemo(() => texto.map((w, i) => ({ id: `w-${i}-${w}`, word: w })), []);
+
   useEffect(() => {
     const revealNextWord = (index: number) => {
       if (index < texto.length) {
@@ -64,26 +67,27 @@ const Carta = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-emerald-900 to-black text-emerald-100 p-8">
-      <div className="galaxy-background">
-        <div className="stars-1"></div>
-        <div className="stars-2"></div>
-        <div className="stars-3"></div>
-      </div>
+    <div className="min-h-screen bg-gradient-to-b from-[#330021] to-black text-pink-100 p-8">
+      <GalaxyBackground />
       <div className="max-w-2xl mx-auto mt-16 relative z-10 fade-in-up">
-        <div className="bg-white/10 backdrop-blur-sm p-8 rounded-lg shadow-xl">
+        <div className="bg-white/10 backdrop-blur-sm p-8 rounded-lg shadow-xl aero-gloss">
           <div className="space-y-6 text-center">
-            {texto.map((word, index) => (
-              <span key={`word-${index}`} className="inline-block">
+            {words.map(({ id, word }, index) => {
+              const isTitle = index === 0;
+              const isSignature = index >= texto.length - 2;
+              let fontSize = '1.1rem';
+              if (isTitle) {
+                fontSize = '2rem';
+              } else if (isSignature) {
+                fontSize = '1.25rem';
+              }
+              const fontWeight: 'bold' | 'normal' = isTitle || isSignature ? 'bold' : 'normal';
+              const display: 'block' | 'inline' = isTitle || isSignature ? 'block' : 'inline';
+              return (
+                <span key={id} className="inline-block">
                 <span 
                   className={`typing-text ${visibleWords.includes(index) ? 'visible' : ''}`}
-                  style={{
-                    fontSize: index === 0 ? '2rem' : // Título
-                            index >= texto.length - 2 ? '1.25rem' : // Assinatura
-                            '1.1rem', // Texto normal
-                    fontWeight: index === 0 || index >= texto.length - 2 ? 'bold' : 'normal',
-                    display: index === 0 || index >= texto.length - 2 ? 'block' : 'inline'
-                  }}
+                  style={{ fontSize, fontWeight, display }}
                   onAnimationEnd={() => {
                     if (index === texto.length - 1) {
                       setTimeout(() => setShowButton(true), 1000);
@@ -100,19 +104,20 @@ const Carta = () => {
                 {(index === 0 || index === texto.length - 3) && (
                   <div className="my-8" />
                 )}
-              </span>
-            ))}
+                </span>
+              );
+            })}
           </div>
         </div>
         
-        {showButton && (
+    {showButton && (
           <div className="text-center mt-12 animate-fade-in">
             <button
               onClick={() => router.push('/cronometros')}
-              className="font-extrabold transition-all duration-300 bg-transparent border-2 
-                       border-emerald-400 rounded-md text-emerald-400 text-lg uppercase 
-                       px-8 py-4 cursor-pointer hover:bg-emerald-400 hover:text-black 
-                       backdrop-blur-sm shadow-lg transform hover:scale-105"
+      className="font-extrabold transition-all duration-300 bg-transparent border-2 
+           border-pink-400 rounded-md text-pink-300 text-lg uppercase 
+           px-8 py-4 cursor-pointer hover:bg-pink-400 hover:text-black 
+           backdrop-blur-sm shadow-lg transform hover:scale-105"
             >
               Nossa História em Números
             </button>

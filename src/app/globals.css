@@ -1,8 +1,21 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Base text/background for light mode (unused since we use galaxy) */
+  --background: #0b0710;
+  --foreground: #f5e9f0;
+
+  /* Love/Frutiger Aero palette */
+  --primary: #ff4fa3; /* rose/magenta */
+  --primary-soft: #ff7ab6; /* soft rose */
+  --accent: #ffd1dc; /* pastel pink */
+  --aero-lavender: #c7a4ff; /* lavender highlight */
+  --aero-champagne: #ffe8f0; /* glossy shine */
+
+  /* Galaxy gradient stops (romantic dusk) */
+  --bg-gradient-start: #330021; /* deep plum */
+  --bg-gradient-mid: #1a0b2e;  /* midnight purple */
+  --bg-gradient-end: #000000;  /* night */
 }
 
 /* Envelope animations */
@@ -40,7 +53,7 @@
   max-width: unset !important;
   max-height: unset !important;
   border-radius: 0 !important;
-  transition: all 2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition: all 2.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
   z-index: 100 !important;
 }
 
@@ -77,6 +90,8 @@
   transform: rotate(-45deg);
   transform-origin: 0 100%;
   pointer-events: none;
+  /* subtle romantic glow */
+  box-shadow: 0 0 18px rgba(255, 79, 163, 0.45);
 }
 
 .heart::after {
@@ -140,7 +155,8 @@
   width: 100%;
   height: 100%;
   z-index: -1;
-  background: radial-gradient(ellipse at bottom, #0a4d3c 0%, #042d4e 50%, #000000 100%);
+  /* Romantic dusk gradient with subtle aero vibe */
+  background: radial-gradient(ellipse at bottom, var(--bg-gradient-start) 0%, var(--bg-gradient-mid) 50%, var(--bg-gradient-end) 100%);
   overflow: hidden;
 }
 
@@ -174,26 +190,26 @@
   width: 2px;
   height: 2px;
   box-shadow: 
-    1979px 919px #4affcd, 1324px 1970px #4affcd, 1151px 1929px #00ffc3,
-    1543px 1198px #4affcd, 1955px 1957px #4affcd, 1319px 1509px #00ffc3,
-    953px 1385px #4affcd, 1768px 661px #4affcd, 1726px 1847px #00ffc3,
-    1565px 1587px #4affcd, 1503px 1447px #4affcd, 1030px 928px #00ffc3,
-    1938px 1043px #4affcd, 1237px 1733px #4affcd, 1389px 289px #00ffc3,
-    1344px 619px #4affcd, 1334px 1783px #4affcd, 1541px 1711px #00ffc3,
-    297px 1193px #4affcd, 1934px 1519px #4affcd, 447px 1047px #00ffc3,
-    804px 1182px #4affcd, 1054px 454px #00ffc3, 734px 1022px #4affcd,
-    642px 623px #4affcd, 981px 1991px #00ffc3, 69px 924px #4affcd,
-    1607px 1484px #4affcd, 1096px 186px #00ffc3, 1973px 1361px #4affcd,
-    778px 1120px #4affcd, 1650px 1106px #00ffc3, 1532px 264px #4affcd,
-    547px 521px #4affcd, 688px 312px #00ffc3, 1488px 891px #4affcd,
-    277px 368px #4affcd, 1516px 552px #00ffc3, 1802px 669px #4affcd,
-    336px 1056px #4affcd, 1888px 1522px #00ffc3, 1789px 974px #4affcd,
-    450px 534px #4affcd, 890px 1012px #00ffc3, 1789px 674px #4affcd,
-    234px 856px #4affcd, 1088px 522px #00ffc3, 1289px 974px #4affcd,
-    634px 856px #4affcd, 1288px 522px #00ffc3, 1489px 974px #4affcd,
-    834px 656px #4affcd, 988px 722px #00ffc3, 1589px 374px #4affcd,
-    1234px 956px #4affcd, 2088px 622px #00ffc3, 2289px 874px #4affcd,
-    2634px 756px #4affcd, 2988px 822px #00ffc3, 2589px 474px #4affcd;
+  1979px 919px var(--primary-soft), 1324px 1970px var(--primary-soft), 1151px 1929px var(--accent),
+  1543px 1198px var(--primary-soft), 1955px 1957px var(--primary-soft), 1319px 1509px var(--accent),
+  953px 1385px var(--primary-soft), 1768px 661px var(--primary-soft), 1726px 1847px var(--accent),
+  1565px 1587px var(--primary-soft), 1503px 1447px var(--primary-soft), 1030px 928px var(--accent),
+  1938px 1043px var(--primary-soft), 1237px 1733px var(--primary-soft), 1389px 289px var(--accent),
+  1344px 619px var(--primary-soft), 1334px 1783px var(--primary-soft), 1541px 1711px var(--accent),
+  297px 1193px var(--primary-soft), 1934px 1519px var(--primary-soft), 447px 1047px var(--accent),
+  804px 1182px var(--primary-soft), 1054px 454px var(--accent), 734px 1022px var(--primary-soft),
+  642px 623px var(--primary-soft), 981px 1991px var(--accent), 69px 924px var(--primary-soft),
+  1607px 1484px var(--primary-soft), 1096px 186px var(--accent), 1973px 1361px var(--primary-soft),
+  778px 1120px var(--primary-soft), 1650px 1106px var(--accent), 1532px 264px var(--primary-soft),
+  547px 521px var(--primary-soft), 688px 312px var(--accent), 1488px 891px var(--primary-soft),
+  277px 368px var(--primary-soft), 1516px 552px var(--accent), 1802px 669px var(--primary-soft),
+  336px 1056px var(--primary-soft), 1888px 1522px var(--accent), 1789px 974px var(--primary-soft),
+  450px 534px var(--primary-soft), 890px 1012px var(--accent), 1789px 674px var(--primary-soft),
+  234px 856px var(--primary-soft), 1088px 522px var(--accent), 1289px 974px var(--primary-soft),
+  634px 856px var(--primary-soft), 1288px 522px var(--accent), 1489px 974px var(--primary-soft),
+  834px 656px var(--primary-soft), 988px 722px var(--accent), 1589px 374px var(--primary-soft),
+  1234px 956px var(--primary-soft), 2088px 622px var(--accent), 2289px 874px var(--primary-soft),
+  2634px 756px var(--primary-soft), 2988px 822px var(--accent), 2589px 474px var(--primary-soft);
   animation: stars 60s linear infinite;
   opacity: 0.8;
 }
@@ -203,20 +219,20 @@
   width: 3px;
   height: 3px;
   box-shadow: 
-    979px 919px #4affcd, 324px 970px #00ffc3, 151px 929px #4affcd,
-    543px 1198px #4affcd, 955px 957px #00ffc3, 319px 1509px #4affcd,
-    953px 1385px #4affcd, 768px 661px #00ffc3, 726px 1847px #4affcd,
-    565px 1587px #00ffc3, 503px 1447px #4affcd, 30px 928px #00ffc3,
-    1607px 1484px #4affcd, 1096px 186px #00ffc3, 1973px 1361px #4affcd,
-    778px 1120px #4affcd, 1650px 1106px #00ffc3, 1532px 264px #4affcd,
-    234px 856px #4affcd, 1088px 522px #00ffc3, 1289px 974px #4affcd,
-    2450px 534px #4affcd, 2890px 1012px #00ffc3, 2789px 674px #4affcd,
-    1234px 856px #4affcd, 2088px 522px #00ffc3, 2289px 974px #4affcd,
-    2450px 534px #4affcd, 2890px 1012px #00ffc3, 2789px 674px #4affcd,
-    3234px 856px #4affcd, 3088px 522px #00ffc3, 3289px 974px #4affcd,
-    3450px 534px #4affcd, 3890px 1012px #00ffc3, 3789px 674px #4affcd,
-    3234px 856px #4affcd, 3088px 522px #00ffc3, 3289px 974px #4affcd,
-    1234px 1856px #4affcd, 2088px 1522px #00ffc3, 2289px 1974px #4affcd;
+  979px 919px var(--primary-soft), 324px 970px var(--accent), 151px 929px var(--primary-soft),
+  543px 1198px var(--primary-soft), 955px 957px var(--accent), 319px 1509px var(--primary-soft),
+  953px 1385px var(--primary-soft), 768px 661px var(--accent), 726px 1847px var(--primary-soft),
+  565px 1587px var(--accent), 503px 1447px var(--primary-soft), 30px 928px var(--accent),
+  1607px 1484px var(--primary-soft), 1096px 186px var(--accent), 1973px 1361px var(--primary-soft),
+  778px 1120px var(--primary-soft), 1650px 1106px var(--accent), 1532px 264px var(--primary-soft),
+  234px 856px var(--primary-soft), 1088px 522px var(--accent), 1289px 974px var(--primary-soft),
+  2450px 534px var(--primary-soft), 2890px 1012px var(--accent), 2789px 674px var(--primary-soft),
+  1234px 856px var(--primary-soft), 2088px 522px var(--accent), 2289px 974px var(--primary-soft),
+  2450px 534px var(--primary-soft), 2890px 1012px var(--accent), 2789px 674px var(--primary-soft),
+  3234px 856px var(--primary-soft), 3088px 522px var(--accent), 3289px 974px var(--primary-soft),
+  3450px 534px var(--primary-soft), 3890px 1012px var(--accent), 3789px 674px var(--primary-soft),
+  3234px 856px var(--primary-soft), 3088px 522px var(--accent), 3289px 974px var(--primary-soft),
+  1234px 1856px var(--primary-soft), 2088px 1522px var(--accent), 2289px 1974px var(--primary-soft);
   animation: stars 90s linear infinite;
   opacity: 1;
 }
@@ -226,28 +242,28 @@
   width: 1px;
   height: 1px;
   box-shadow: 
-    179px 919px #4affcd, 324px 970px #00ffc3, 151px 929px #4affcd,
-    543px 198px #4affcd, 955px 957px #00ffc3, 319px 509px #4affcd,
-    953px 385px #4affcd, 768px 661px #4affcd, 726px 847px #4affcd,
-    565px 587px #00ffc3, 503px 447px #4affcd, 30px 928px #00ffc3,
-    607px 484px #4affcd, 96px 186px #00ffc3, 973px 361px #4affcd,
-    778px 120px #4affcd, 650px 106px #00ffc3, 532px 264px #4affcd,
-    547px 121px #4affcd, 688px 712px #00ffc3, 488px 891px #4affcd,
-    277px 768px #4affcd, 516px 152px #00ffc3, 802px 69px #4affcd,
-    336px 156px #4affcd, 888px 522px #00ffc3, 789px 974px #4affcd,
-    1336px 56px #4affcd, 888px 522px #00ffc3, 789px 974px #4affcd,
-    450px 534px #4affcd, 890px 1012px #00ffc3, 789px 674px #4affcd,
-    234px 856px #4affcd, 1088px 522px #00ffc3, 1289px 974px #4affcd,
-    1450px 534px #4affcd, 1890px 1012px #00ffc3, 1789px 674px #4affcd,
-    134px 856px #4affcd, 2088px 522px #00ffc3, 2289px 974px #4affcd,
-    134px 256px #4affcd, 1088px 322px #00ffc3, 1289px 474px #4affcd,
-    1450px 234px #4affcd, 1890px 712px #00ffc3, 1789px 874px #4affcd,
-    2134px 256px #4affcd, 2088px 322px #00ffc3, 2289px 474px #4affcd,
-    2450px 234px #4affcd, 2890px 712px #00ffc3, 2789px 874px #4affcd,
-    3134px 256px #4affcd, 3088px 322px #00ffc3, 3289px 474px #4affcd,
-    3450px 234px #4affcd, 3890px 712px #00ffc3, 3789px 874px #4affcd,
-    134px 1256px #4affcd, 1088px 1322px #00ffc3, 1289px 1474px #4affcd,
-    1450px 1234px #4affcd, 1890px 1712px #00ffc3, 1789px 1874px #4affcd;
+  179px 919px var(--primary-soft), 324px 970px var(--accent), 151px 929px var(--primary-soft),
+  543px 198px var(--primary-soft), 955px 957px var(--accent), 319px 509px var(--primary-soft),
+  953px 385px var(--primary-soft), 768px 661px var(--accent), 726px 847px var(--primary-soft),
+  565px 587px var(--accent), 503px 447px var(--primary-soft), 30px 928px var(--accent),
+  607px 484px var(--primary-soft), 96px 186px var(--accent), 973px 361px var(--primary-soft),
+  778px 120px var(--primary-soft), 650px 106px var(--accent), 532px 264px var(--primary-soft),
+  547px 121px var(--primary-soft), 688px 712px var(--accent), 488px 891px var(--primary-soft),
+  277px 768px var(--primary-soft), 516px 152px var(--accent), 802px 69px var(--primary-soft),
+  336px 156px var(--primary-soft), 888px 522px var(--accent), 789px 974px var(--primary-soft),
+  1336px 56px var(--primary-soft), 888px 522px var(--accent), 789px 974px var(--primary-soft),
+  450px 534px var(--primary-soft), 890px 1012px var(--accent), 789px 674px var(--primary-soft),
+  234px 856px var(--primary-soft), 1088px 522px var(--accent), 1289px 974px var(--primary-soft),
+  1450px 534px var(--primary-soft), 1890px 1012px var(--accent), 1789px 674px var(--primary-soft),
+  134px 856px var(--primary-soft), 2088px 522px var(--accent), 2289px 974px var(--primary-soft),
+  134px 256px var(--primary-soft), 1088px 322px var(--accent), 1289px 474px var(--primary-soft),
+  1450px 234px var(--primary-soft), 1890px 712px var(--accent), 1789px 874px var(--primary-soft),
+  2134px 256px var(--primary-soft), 2088px 322px var(--accent), 2289px 474px var(--primary-soft),
+  2450px 234px var(--primary-soft), 2890px 712px var(--accent), 2789px 874px var(--primary-soft),
+  3134px 256px var(--primary-soft), 3088px 322px var(--accent), 3289px 474px var(--primary-soft),
+  3450px 234px var(--primary-soft), 3890px 712px var(--accent), 3789px 874px var(--primary-soft),
+  134px 1256px var(--primary-soft), 1088px 1322px var(--accent), 1289px 1474px var(--primary-soft),
+  1450px 1234px var(--primary-soft), 1890px 1712px var(--accent), 1789px 1874px var(--primary-soft);
   animation: stars 40s linear infinite;
   opacity: 0.6;
 }
@@ -257,20 +273,20 @@
   width: 1.5px;
   height: 1.5px;
   box-shadow: 
-    1179px 119px #4affcd, 1324px 170px #00ffc3, 1151px 129px #4affcd,
-    1543px 198px #4affcd, 1955px 157px #00ffc3, 1319px 509px #4affcd,
-    1953px 385px #4affcd, 1768px 161px #00ffc3, 1726px 847px #4affcd,
-    1565px 587px #00ffc3, 1503px 447px #4affcd, 1030px 128px #00ffc3,
-    1607px 484px #4affcd, 1096px 186px #00ffc3, 1973px 361px #4affcd,
-    1778px 120px #4affcd, 1650px 106px #00ffc3, 1532px 264px #4affcd,
-    1547px 121px #4affcd, 1688px 712px #00ffc3, 1488px 891px #4affcd,
-    1277px 768px #4affcd, 1516px 152px #00ffc3, 1802px 69px #4affcd,
-    450px 534px #4affcd, 890px 1012px #00ffc3, 789px 674px #4affcd,
-    234px 856px #4affcd, 1088px 522px #00ffc3, 1289px 974px #4affcd,
-    634px 856px #4affcd, 1288px 522px #00ffc3, 1489px 974px #4affcd,
-    2634px 856px #4affcd, 2288px 522px #00ffc3, 2489px 974px #4affcd,
-    3634px 856px #4affcd, 3288px 522px #00ffc3, 3489px 974px #4affcd,
-    634px 1856px #4affcd, 1288px 1522px #00ffc3, 1489px 1974px #4affcd;
+  1179px 119px var(--primary-soft), 1324px 170px var(--accent), 1151px 129px var(--primary-soft),
+  1543px 198px var(--primary-soft), 1955px 157px var(--accent), 1319px 509px var(--primary-soft),
+  1953px 385px var(--primary-soft), 1768px 161px var(--accent), 1726px 847px var(--primary-soft),
+  1565px 587px var(--accent), 1503px 447px var(--primary-soft), 1030px 128px var(--accent),
+  1607px 484px var(--primary-soft), 1096px 186px var(--accent), 1973px 361px var(--primary-soft),
+  1778px 120px var(--primary-soft), 1650px 106px var(--accent), 1532px 264px var(--primary-soft),
+  1547px 121px var(--primary-soft), 1688px 712px var(--accent), 1488px 891px var(--primary-soft),
+  1277px 768px var(--primary-soft), 1516px 152px var(--accent), 1802px 69px var(--primary-soft),
+  450px 534px var(--primary-soft), 890px 1012px var(--accent), 789px 674px var(--primary-soft),
+  234px 856px var(--primary-soft), 1088px 522px var(--accent), 1289px 974px var(--primary-soft),
+  634px 856px var(--primary-soft), 1288px 522px var(--accent), 1489px 974px var(--primary-soft),
+  2634px 856px var(--primary-soft), 2288px 522px var(--accent), 2489px 974px var(--primary-soft),
+  3634px 856px var(--primary-soft), 3288px 522px var(--accent), 3489px 974px var(--primary-soft),
+  634px 1856px var(--primary-soft), 1288px 1522px var(--accent), 1489px 1974px var(--primary-soft);
   animation: stars 70s linear infinite;
   opacity: 0.7;
 }
@@ -280,18 +296,18 @@
   width: 3px;
   height: 3px;
   box-shadow: 
-    2179px 919px #4affcd, 2324px 970px #00ffc3, 2151px 929px #4affcd,
-    2543px 198px #4affcd, 2955px 957px #00ffc3, 2319px 509px #4affcd,
-    2953px 385px #4affcd, 2768px 661px #4affcd, 2726px 847px #4affcd,
-    2565px 587px #4affcd, 2503px 447px #4affcd, 2030px 128px #00ffc3,
-    2607px 484px #4affcd, 2096px 186px #00ffc3, 2973px 361px #4affcd,
-    450px 534px #4affcd, 890px 1012px #00ffc3, 789px 674px #4affcd,
-    234px 856px #4affcd, 1088px 522px #00ffc3, 1289px 974px #4affcd,
-    634px 856px #4affcd, 1288px 522px #00ffc3, 1489px 974px #4affcd,
-    834px 656px #4affcd, 988px 722px #00ffc3, 1589px 374px #4affcd,
-    2834px 656px #4affcd, 2988px 722px #00ffc3, 2589px 374px #4affcd,
-    3834px 656px #4affcd, 3988px 722px #00ffc3, 3589px 374px #4affcd,
-    834px 1656px #4affcd, 988px 1722px #00ffc3, 1589px 1374px #4affcd;
+  2179px 919px var(--primary-soft), 2324px 970px var(--accent), 2151px 929px var(--primary-soft),
+  2543px 198px var(--primary-soft), 2955px 957px var(--accent), 2319px 509px var(--primary-soft),
+  2953px 385px var(--primary-soft), 2768px 661px var(--primary-soft), 2726px 847px var(--primary-soft),
+  2565px 587px var(--primary-soft), 2503px 447px var(--primary-soft), 2030px 128px var(--accent),
+  2607px 484px var(--primary-soft), 2096px 186px var(--accent), 2973px 361px var(--primary-soft),
+  450px 534px var(--primary-soft), 890px 1012px var(--accent), 789px 674px var(--primary-soft),
+  234px 856px var(--primary-soft), 1088px 522px var(--accent), 1289px 974px var(--primary-soft),
+  634px 856px var(--primary-soft), 1288px 522px var(--accent), 1489px 974px var(--primary-soft),
+  834px 656px var(--primary-soft), 988px 722px var(--accent), 1589px 374px var(--primary-soft),
+  2834px 656px var(--primary-soft), 2988px 722px var(--accent), 2589px 374px var(--primary-soft),
+  3834px 656px var(--primary-soft), 3988px 722px var(--accent), 3589px 374px var(--primary-soft),
+  834px 1656px var(--primary-soft), 988px 1722px var(--accent), 1589px 1374px var(--primary-soft);
   animation: stars 120s linear infinite;
   opacity: 0.9;
 }
@@ -373,60 +389,6 @@
   animation: fade-in 0.5s ease-out forwards;
 }
 
-@keyframes fadeOutUp {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(-100%);
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-@keyframes fadeOutLetter {
-  from {
-    opacity: 1;
-    transform: translateY(-60px);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(-80px);
-  }
-}
-
-.fade-out-letter {
-  animation: fadeOutLetter 0.8s ease-out forwards;
-}
-
-.fade-in-up {
-  animation: fadeInUp 1s ease-out;
-}
-
-.fade-out {
-  animation: fadeOut 0.8s ease-out forwards;
-}
-
 /* Animações dos cronômetros */
 @keyframes pulse-soft {
   0% {
@@ -451,10 +413,10 @@
   backdrop-filter: blur(16px);
   border-radius: 24px;
   box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.1),
-    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    0 8px 32px rgba(255, 79, 163, 0.15),
+    inset 0 1px 1px rgba(255, 232, 240, 0.2);
   padding: 32px 16px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 79, 163, 0.25);
   width: 100%;
   margin-bottom: 24px;
   overflow: hidden;
@@ -470,19 +432,19 @@
   position: relative;
   width: min(70px, calc((100vw - 64px) / 8));
   height: min(100px, calc((100vw - 64px) / 6));
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(15, 10, 20, 0.85);
   border-radius: 12px;
   font-family: 'Helvetica Neue', -apple-system, sans-serif;
   font-weight: 400;
-  color: #4ade80;
-  text-shadow: 0 0 25px rgba(74, 222, 128, 0.9);
+  color: var(--primary-soft);
+  text-shadow: 0 0 25px rgba(255, 122, 182, 0.9);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: min(3.5rem, calc((100vw - 64px) / 12));
   box-shadow: 
     0 6px 12px rgba(0, 0, 0, 0.4),
-    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    inset 0 1px 1px rgba(255, 232, 240, 0.08);
   border: 1px solid rgba(0, 0, 0, 0.4);
   letter-spacing: -1px;
   backdrop-filter: blur(4px);
@@ -490,7 +452,7 @@
 
 .label {
   font-size: clamp(0.6rem, 1.5vw, 0.8rem);
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 209, 220, 0.7);
   text-transform: uppercase;
   letter-spacing: 2px;
   margin-top: 12px;
@@ -500,30 +462,11 @@
 
 .separator {
   font-size: min(3.5rem, calc((100vw - 64px) / 12));
-  color: rgba(74, 222, 128, 0.8);
-  text-shadow: 0 0 20px rgba(74, 222, 128, 0.5);
+  color: rgba(255, 122, 182, 0.9);
+  text-shadow: 0 0 20px rgba(255, 122, 182, 0.6);
   margin: 0 2px;
   line-height: min(100px, calc((100vw - 64px) / 6));
   font-weight: 200;
-}
-
-.timer-row {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 2px;
-  padding: 12px 8px;
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 12px;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
-  margin: 0 auto;
-}
-
-.time-group {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0 4px;
 }
 
 .timer-row {
@@ -538,10 +481,17 @@
   max-width: fit-content;
 }
 
+.time-group {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 4px;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0b0710;
+    --foreground: #f5e9f0;
   }
 }
 
@@ -549,4 +499,28 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Subtle aero gloss overlay for sections that use bg-white/10 etc. */
+.aero-gloss {
+  position: relative;
+}
+.aero-gloss::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0) 30%);
+  pointer-events: none;
+}
+
+/* Heart glow enhancement */
+
+/* Fade-out class used on home letter */
+.envelope-fade-out {
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+.fade-out-letter {
+  opacity: 0;
+  transition: opacity 1s ease;
 }
