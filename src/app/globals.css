@@ -60,31 +60,7 @@
 .letter::after {
   content: '';
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-image: linear-gradient(180deg, 
-    rgba(255,255,255,0.00) 25%, 
-    rgba(215,227,239,0.70) 55%, 
-    rgba(215,227,239,1.00) 100%);
-}
-
-/* Heart styles */
-.heart {
-  pointer-events: none;
-  width: 50px;
-  height: 80px;
-}
-
-.heart::before,
-.heart::after {
-  position: absolute;
-  content: "";
-  left: 50px;
-  top: 0;
-  width: 50px;
-  height: 80px;
+  /* meteors removed per request */
   background: #D00000;
   border-radius: 50px 50px 0 0;
   transform: rotate(-45deg);
@@ -146,6 +122,46 @@
 .animate-heart3 {
   animation: slideUp 7s linear 1 forwards 0.7s,
              sideSway 2s ease-in-out 6 alternate;
+}
+
+/* Extra hearts burst */
+.heart-fx {
+  pointer-events: none;
+  width: 28px;
+  height: 45px;
+}
+.heart-fx::before,
+.heart-fx::after {
+  position: absolute;
+  content: "";
+  left: 28px;
+  top: 0;
+  width: 28px;
+  height: 45px;
+  background: #FF3B8D;
+  border-radius: 28px 28px 0 0;
+  transform: rotate(-45deg);
+  transform-origin: 0 100%;
+  box-shadow: 0 0 10px rgba(255, 79, 163, 0.6);
+}
+.heart-fx::after {
+  left: 0;
+  transform: rotate(45deg);
+  transform-origin: 100% 100%;
+}
+
+@keyframes float-up-2 {
+  0% { transform: translate3d(0, 0, 0); opacity: 0; }
+  15% { opacity: 1; }
+  100% { transform: translate3d(0, -640px, 0); opacity: 0; }
+}
+@keyframes sway-2 {
+  0% { margin-left: 0; }
+  100% { margin-left: 28px; }
+}
+.heart-fx.animate {
+  animation: float-up-2 var(--dur, 5.8s) ease-out var(--delay, 0s) forwards,
+             sway-2 2.8s ease-in-out var(--delay, 0s) 3 alternate;
 }
 
 .galaxy-background {
@@ -381,27 +397,33 @@
 }
 .meteors span {
   position: absolute;
-  top: -10%;
-  left: 50%;
+  top: var(--my, -12vh);
+  left: var(--mx, 50vw);
   width: 2px;
-  height: 80px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.0), rgba(255,255,255,0.9), rgba(255,79,163,0.0));
-  filter: drop-shadow(0 0 6px rgba(255,122,182,0.6));
-  transform: rotate(35deg) translate3d(0,0,0);
-  animation: meteor-fall 6s linear infinite;
-  opacity: 0.9;
+  height: var(--mlen, 90px);
+  background: linear-gradient(180deg, rgba(255,255,255,0.0), rgba(255,255,255,0.95), rgba(255,79,163,0.15));
+  filter: drop-shadow(0 0 8px rgba(255,122,182,0.7));
+  transform: rotate(var(--mrot, 35deg)) translate3d(0,0,0);
+  animation: meteor-fall var(--mdur, 7s) linear var(--mdelay, 0s) infinite;
+  opacity: 0.95;
+  will-change: transform, opacity;
+  z-index: 1;
 }
-.meteors span:nth-child(1) { left: 15%; animation-delay: 0s; height: 70px; }
-.meteors span:nth-child(2) { left: 35%; animation-delay: 2s; height: 90px; }
-.meteors span:nth-child(3) { left: 55%; animation-delay: 4s; height: 60px; }
-.meteors span:nth-child(4) { left: 75%; animation-delay: 1s; height: 85px; }
-.meteors span:nth-child(5) { left: 25%; animation-delay: 3s; height: 75px; }
-.meteors span:nth-child(6) { left: 85%; animation-delay: 5s; height: 95px; }
+/* extra spans get positions/delays from inline CSS variables */
 
 @keyframes meteor-fall {
-  0% { transform: rotate(35deg) translate3d(0, -20%, 0); opacity: 0; }
+  0% { transform: rotate(var(--mrot, 35deg)) translate3d(0, -10vh, 0); opacity: 0; }
   10% { opacity: 1; }
-  100% { transform: rotate(35deg) translate3d(-120vw, 120vh, 0); opacity: 0; }
+  100% { transform: rotate(var(--mrot, 35deg)) translate3d(-140vw, 140vh, 0); opacity: 0; }
+}
+
+/* Canvas for random sparkle stars */
+.stars-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0.9;
 }
 
 @keyframes letter-transition {
