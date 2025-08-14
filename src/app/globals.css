@@ -173,7 +173,9 @@
 .galaxy-background::after,
 .galaxy-background .stars-1,
 .galaxy-background .stars-2,
-.galaxy-background .stars-3 {
+.galaxy-background .stars-3,
+.galaxy-background .stars-4,
+.galaxy-background .stars-5 {
   --star-y: 0px;
   content: '';
   position: absolute;
@@ -319,6 +321,87 @@
   50% {
     opacity: 1;
   }
+}
+
+/* Nebula layer: drifting soft color clouds with romantic hues */
+.nebula-layer {
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(50% 60% at 20% 70%, rgba(255, 79, 163, 0.18), transparent 60%),
+    radial-gradient(40% 55% at 80% 30%, rgba(199, 164, 255, 0.16), transparent 60%),
+    radial-gradient(35% 50% at 50% 50%, rgba(255, 232, 240, 0.10), transparent 65%);
+  filter: blur(42px) saturate(120%);
+  animation: nebula-drift 60s ease-in-out infinite alternate;
+}
+
+@keyframes nebula-drift {
+  0% { transform: translate3d(-2%, 0, 0) scale(1); opacity: 0.7; }
+  50% { transform: translate3d(2%, -1%, 0) scale(1.05); opacity: 0.9; }
+  100% { transform: translate3d(-1%, 1%, 0) scale(1.02); opacity: 0.8; }
+}
+
+/* Extra dense star layers */
+.galaxy-background .stars-4 {
+  --star-y: -1600px;
+  width: 2px;
+  height: 2px;
+  box-shadow:
+    5vw 10vh var(--accent), 15vw 40vh var(--primary-soft), 30vw 22vh var(--accent), 42vw 12vh var(--primary-soft),
+    55vw 18vh var(--accent), 68vw 35vh var(--primary-soft), 80vw 8vh var(--accent), 90vw 28vh var(--primary-soft),
+    12vw 55vh var(--accent), 26vw 65vh var(--primary-soft), 38vw 58vh var(--accent), 47vw 62vh var(--primary-soft),
+    60vw 72vh var(--accent), 75vw 66vh var(--primary-soft), 88vw 54vh var(--accent), 94vw 76vh var(--primary-soft),
+    6vw 84vh var(--accent), 18vw 92vh var(--primary-soft), 33vw 88vh var(--accent), 49vw 90vh var(--primary-soft),
+    62vw 82vh var(--accent), 77vw 94vh var(--primary-soft), 85vw 86vh var(--accent), 96vw 98vh var(--primary-soft);
+  animation: stars 85s linear infinite;
+  opacity: 0.8;
+}
+
+.galaxy-background .stars-5 {
+  --star-y: -2000px;
+  width: 1px;
+  height: 1px;
+  box-shadow:
+    2vw 15vh var(--primary-soft), 8vw 25vh var(--accent), 20vw 18vh var(--primary-soft), 28vw 30vh var(--accent),
+    36vw 12vh var(--primary-soft), 44vw 26vh var(--accent), 52vw 16vh var(--primary-soft), 60vw 22vh var(--accent),
+    68vw 10vh var(--primary-soft), 76vw 28vh var(--accent), 84vw 14vh var(--primary-soft), 92vw 24vh var(--accent),
+    10vw 48vh var(--primary-soft), 22vw 44vh var(--accent), 34vw 46vh var(--primary-soft), 46vw 50vh var(--accent),
+    58vw 42vh var(--primary-soft), 70vw 46vh var(--accent), 82vw 40vh var(--primary-soft), 94vw 44vh var(--accent),
+    5vw 72vh var(--primary-soft), 17vw 70vh var(--accent), 29vw 74vh var(--primary-soft), 41vw 78vh var(--accent),
+    53vw 68vh var(--primary-soft), 65vw 76vh var(--accent), 79vw 70vh var(--primary-soft), 91vw 74vh var(--accent);
+  animation: stars 110s linear infinite;
+  opacity: 0.9;
+}
+
+/* Shooting stars (meteors) with randomized delays */
+.meteors {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.meteors span {
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  width: 2px;
+  height: 80px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.0), rgba(255,255,255,0.9), rgba(255,79,163,0.0));
+  filter: drop-shadow(0 0 6px rgba(255,122,182,0.6));
+  transform: rotate(35deg) translate3d(0,0,0);
+  animation: meteor-fall 6s linear infinite;
+  opacity: 0.9;
+}
+.meteors span:nth-child(1) { left: 15%; animation-delay: 0s; height: 70px; }
+.meteors span:nth-child(2) { left: 35%; animation-delay: 2s; height: 90px; }
+.meteors span:nth-child(3) { left: 55%; animation-delay: 4s; height: 60px; }
+.meteors span:nth-child(4) { left: 75%; animation-delay: 1s; height: 85px; }
+.meteors span:nth-child(5) { left: 25%; animation-delay: 3s; height: 75px; }
+.meteors span:nth-child(6) { left: 85%; animation-delay: 5s; height: 95px; }
+
+@keyframes meteor-fall {
+  0% { transform: rotate(35deg) translate3d(0, -20%, 0); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: rotate(35deg) translate3d(-120vw, 120vh, 0); opacity: 0; }
 }
 
 @keyframes letter-transition {
