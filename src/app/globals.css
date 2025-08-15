@@ -523,12 +523,41 @@
 
 /* Flip Clock styles */
 .flip-clock { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(16px); border-radius: 24px; box-shadow: 0 8px 32px rgba(255, 79, 163, 0.15), inset 0 1px 1px rgba(255, 232, 240, 0.2); padding: 32px 16px; border: 1px solid rgba(255, 79, 163, 0.25); width: 100%; margin-bottom: 24px; overflow: hidden; }
-.digit-container { display: inline-flex; align-items: center; margin: 0 2px; }
+.digit-container { display: inline-flex; align-items: center; margin: 0 2px; height: min(100px, calc((100vw - 64px) / 6)); }
 .digit { position: relative; width: min(70px, calc((100vw - 64px) / 8)); height: min(100px, calc((100vw - 64px) / 6)); background: rgba(15, 10, 20, 0.85); border-radius: 12px; font-family: 'Helvetica Neue', -apple-system, sans-serif; font-weight: 400; color: var(--primary-soft); text-shadow: 0 0 25px rgba(255, 122, 182, 0.9); display: flex; align-items: center; justify-content: center; font-size: min(3.5rem, calc((100vw - 64px) / 12)); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 232, 240, 0.08); border: 1px solid rgba(0, 0, 0, 0.4); letter-spacing: -1px; backdrop-filter: blur(4px); }
 .label { font-size: clamp(0.6rem, 1.5vw, 0.8rem); color: rgba(255, 209, 220, 0.7); text-transform: uppercase; letter-spacing: 2px; margin-top: 12px; text-align: center; font-weight: 500; }
-.separator { font-size: min(3.5rem, calc((100vw - 64px) / 12)); color: rgba(255, 122, 182, 0.9); text-shadow: 0 0 20px rgba(255, 122, 182, 0.6); margin: 0 2px; line-height: min(100px, calc((100vw - 64px) / 6)); font-weight: 200; }
+.separator { display: inline-flex; align-items: center; justify-content: center; height: 100%; font-family: 'Helvetica Neue', -apple-system, sans-serif; font-size: min(3.5rem, calc((100vw - 64px) / 12)); color: rgba(255, 122, 182, 0.9); text-shadow: 0 0 20px rgba(255, 122, 182, 0.6); margin-left: 10px; margin-right: 0px; line-height: 1; font-weight: 300; }
 .timer-row { display: flex; justify-content: center; gap: 4px; margin: 0 auto; padding: 20px; background: rgba(255, 255, 255, 0.03); border-radius: 16px; box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05); max-width: fit-content; }
 .time-group { display: inline-flex; flex-direction: column; align-items: center; margin: 0 4px; }
+
+/* --- Mobile layout: stack 2 rows (Anos/Meses/Dias on top; Horas/Min/Seg below) --- */
+@media (max-width: 520px) {
+  .timer-row {
+    display: grid;
+    grid-template-columns: repeat(3, max-content);
+    column-gap: 6px;
+    row-gap: 12px;
+    justify-content: center;
+    padding: 16px;
+  }
+  /* Bigger numbers and labels on mobile */
+  .digit {
+    width: clamp(56px, 21vw, 64px);
+    height: clamp(82px, 28vw, 92px);
+    font-size: clamp(1.9rem, 8.2vw, 2.3rem);
+  }
+  .digit-container { height: clamp(82px, 28vw, 92px); }
+  .separator {
+    height: clamp(82px, 28vw, 92px);
+    font-size: clamp(1.9rem, 8.2vw, 2.3rem);
+    line-height: 1;
+  margin-left: 14px;
+  margin-right: 2px;
+  }
+  .label {
+    font-size: clamp(0.72rem, 3vw, 0.95rem);
+  }
+}
 
 @media (prefers-color-scheme: dark) {
   :root { --background: #0b0710; --foreground: #f5e9f0; }
