@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, memo } from "react";
 
 type Decor = "none" | "hearts" | "petals" | "hearts+petals";
 interface GalaxyBackgroundProps {
@@ -117,8 +117,32 @@ const GalaxyBackground = ({ variant = "dark", decor = "none" }: GalaxyBackground
 		};
 	}, []);
 
-	const hearts = useMemo(() => Array.from({ length: decor.includes("hearts") ? 16 : 0 }, (_, i) => i), [decor]);
-	const petals = useMemo(() => Array.from({ length: decor.includes("petals") ? 12 : 0 }, (_, i) => i), [decor]);
+	// Precompute randomized overlay particles ONCE per decor so re-renders don't reset animations
+	const hearts = useMemo(() => {
+		const count = decor.includes("hearts") ? 16 : 0;
+		return Array.from({ length: count }, (_, i) => ({
+			key: `h-${i}`,
+			left: `${Math.round(Math.random() * 100)}%`,
+			delay: `${(Math.random() * 6).toFixed(2)}s`,
+			dur: `${(7 + Math.random() * 6).toFixed(2)}s`,
+			size: `${12 + Math.round(Math.random() * 10)}px`,
+			amp: `${Math.round(10 + Math.random() * 18)}px`,
+		}));
+	}, [decor]);
+
+	const petals = useMemo(() => {
+		const count = decor.includes("petals") ? 14 : 0;
+		return Array.from({ length: count }, (_, i) => ({
+			key: `p-${i}`,
+			left: `${Math.round(Math.random() * 100)}%`,
+			delay: `${(Math.random() * 5).toFixed(2)}s`,
+			dur: `${(10 + Math.random() * 8).toFixed(2)}s`,
+			rot: `${Math.round(Math.random() * 360)}deg`,
+			size: `${14 + Math.round(Math.random() * 12)}px`,
+			sway: `${Math.round(16 + Math.random() * 26)}px`,
+			tilt: `${Math.round(10 + Math.random() * 16)}deg`,
+		}));
+	}, [decor]);
 
 	return (
 		<div className={`galaxy-background ${variant === "light" ? "light" : ""}`} aria-hidden>
@@ -139,26 +163,17 @@ const GalaxyBackground = ({ variant = "dark", decor = "none" }: GalaxyBackground
 			{/* Optional romantic overlays */}
 			{hearts.length > 0 && (
 				<div className="romance-hearts" aria-hidden>
-					{hearts.map((i) => {
-						const left = `${Math.round(Math.random() * 100)}%`;
-						const delay = `${(Math.random() * 6).toFixed(2)}s`;
-						const dur = `${(7 + Math.random() * 6).toFixed(2)}s`;
-						const size = `${12 + Math.round(Math.random() * 10)}px`;
-						return <span key={`h-${i}`} className="r-heart" style={{ left, ['--delay' as any]: delay, ['--dur' as any]: dur, width: size, height: `calc(${size} * 1.6)` }} />;
-					})}
+					{hearts.map(({ key, left, delay, dur, size, amp }) => (
+						<span key={key} className="r-heart" style={{ left, ["--delay" as any]: delay, ["--dur" as any]: dur, ["--amp" as any]: amp, ["--s" as any]: size }} />
+					))}
 				</div>
 			)}
 
 			{petals.length > 0 && (
 				<div className="romance-petals" aria-hidden>
-					{petals.map((i) => {
-						const left = `${Math.round(Math.random() * 100)}%`;
-						const delay = `${(Math.random() * 5).toFixed(2)}s`;
-						const dur = `${(10 + Math.random() * 8).toFixed(2)}s`;
-						const rot = `${Math.round(Math.random() * 360)}deg`;
-						const size = `${14 + Math.round(Math.random() * 12)}px`;
-						return <span key={`p-${i}`} className="petal" style={{ left, ['--delay' as any]: delay, ['--dur' as any]: dur, ['--rot' as any]: rot, width: size, height: `calc(${size} * 1.4)` }} />;
-					})}
+					{petals.map(({ key, left, delay, dur, rot, size, sway, tilt }) => (
+						<span key={key} className="petal" style={{ left, ["--delay" as any]: delay, ["--dur" as any]: dur, ["--rot" as any]: rot, ["--sway" as any]: sway, ["--tilt" as any]: tilt, width: size, height: `calc(${size} * 1.4)` }} />
+					))}
 				</div>
 			)}
 
@@ -167,5 +182,5 @@ const GalaxyBackground = ({ variant = "dark", decor = "none" }: GalaxyBackground
 	);
 };
 
-export default GalaxyBackground;
+export default memo(GalaxyBackground);
 

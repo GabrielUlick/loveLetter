@@ -12,6 +12,21 @@
 			"type": "shell",
 			"command": "npm run build",
 			"group": "build"
+		},
+		{
+			"label": "Preview CSS build (Next.js)",
+			"type": "shell",
+			"command": "npm run build",
+			"problemMatcher": [
+				"$eslint-stylish"
+			],
+			"group": "build"
+		},
+		{
+			"label": "Build Next.js app",
+			"type": "shell",
+			"command": "npm run build",
+			"group": "build"
 		}
 	]
 }

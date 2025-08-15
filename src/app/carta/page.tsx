@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import GalaxyBackground from '@/components/shared/GalaxyBackground';
+import CartaDecor from '@/components/decor/CartaDecor';
 
 // Hoist texto outside the component to keep it stable and avoid hook dependency warnings
 const textoConst = [
@@ -54,22 +55,19 @@ const Carta = () => {
   
   const words = useMemo(() => textoConst.map((w, i) => ({ id: `w-${i}-${w}`, word: w })), []);
 
+  // Switch to single-pass setup using CSS animation delays per word.
   useEffect(() => {
-    const revealNextWord = (index: number) => {
-      if (index < textoConst.length) {
-        setVisibleWords(prev => [...prev, index]);
-        const delay = textoConst[index].length * 50 + 100; // Ajuste o delay baseado no tamanho da palavra
-        setTimeout(() => revealNextWord(index + 1), delay);
-      }
-    };
-
-    // Começa a revelação das palavras após um pequeno delay inicial
-    setTimeout(() => revealNextWord(0), 500);
+    // Reveal all at once with per-word CSS delays to avoid frequent re-renders
+    setVisibleWords(textoConst.map((_, i) => i));
+    const totalMs = textoConst.reduce((acc, w, i) => acc + (w.length * 50 + 100), 0) + 800;
+    const t = setTimeout(() => setShowButton(true), totalMs);
+    return () => clearTimeout(t);
   }, []);
 
   return (
     <div className="min-h-screen text-pink-100 p-8">
       <GalaxyBackground variant="light" decor="hearts+petals" />
+  <CartaDecor />
       <div className="max-w-2xl mx-auto mt-16 relative z-10 fade-in-up">
         <div className="bg-white/10 backdrop-blur-sm p-8 rounded-lg shadow-xl aero-gloss">
           <div className="space-y-6 text-center">
@@ -84,16 +82,17 @@ const Carta = () => {
               }
               const fontWeight: 'bold' | 'normal' = isTitle || isSignature ? 'bold' : 'normal';
               const display: 'block' | 'inline' = isTitle || isSignature ? 'block' : 'inline';
+              const delayMs = textoConst.slice(0, index).reduce((acc, w) => acc + (w.length * 50 + 100), 0);
+              const styleVars: React.CSSProperties & { ['--type-delay']?: string; ['--type-dur']?: string } = {
+                ['--type-delay']: `${500 + delayMs}ms`,
+                ['--type-dur']: `${Math.max(100, word.length * 50)}ms`,
+                fontSize, fontWeight, display,
+              } as any;
               return (
                 <span key={id} className="inline-block">
                 <span 
                   className={`typing-text ${visibleWords.includes(index) ? 'visible' : ''}`}
-                  style={{ fontSize, fontWeight, display }}
-                  onAnimationEnd={() => {
-                    if (index === textoConst.length - 1) {
-                      setTimeout(() => setShowButton(true), 1000);
-                    }
-                  }}
+                  style={styleVars}
                 >
                   {word}
                 </span>

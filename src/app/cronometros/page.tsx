@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import FlipDigit from '@/components/ui/FlipDigit';
 import GalaxyBackground from "@/components/shared/GalaxyBackground";
+import CronoDecor from "@/components/decor/CronoDecor";
 
 interface TimeCount {
   years: number;
@@ -63,7 +64,9 @@ const Cronometros = () => {
 
   return (
     <div className="min-h-screen text-pink-100 p-2 sm:p-4 md:p-8">
+      {/* Background and decor are static; they render once and are not affected by timer state */}
       <GalaxyBackground variant="light" decor="petals" />
+      <CronoDecor />
       <div className="max-w-[1200px] mx-auto px-2 sm:px-4">
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-center mb-12 sm:mb-16 md:mb-20 text-pink-200 drop-shadow-[0_0_20px_rgba(255,212,220,0.35)]">
           Nossa História em Números
@@ -91,4 +94,4 @@ const Cronometros = () => {
   );
 };
 
-export default Cronometros;
+export default memo(Cronometros);
