@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Meu Amor em Carta",
-  description: "Uma carta de amor com estilo Frutiger Aero",
+  title: "Para Meu Amor Izadora",
+  description: "Uma carta de amor",
   icons: {
     icon: "/icon.svg",
     shortcut: "/icon.svg",
