@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, memo } from "react";
+import { useEffect, useMemo, useRef, memo, useState } from "react";
 
 type Decor = "none" | "hearts" | "petals" | "hearts+petals";
 interface GalaxyBackgroundProps {
@@ -11,6 +11,10 @@ interface GalaxyBackgroundProps {
 const GalaxyBackground = ({ variant = "dark", decor = "none" }: GalaxyBackgroundProps) => {
 		const canvasRef = useRef<HTMLCanvasElement | null>(null);
 			// Meteors removed per request
+
+		// Avoid hydration mismatches from random props by mounting overlays only on the client
+		const [mounted, setMounted] = useState(false);
+		useEffect(() => { setMounted(true); }, []);
 
 		useEffect(() => {
 		const canvas = canvasRef.current;
@@ -117,9 +121,10 @@ const GalaxyBackground = ({ variant = "dark", decor = "none" }: GalaxyBackground
 		};
 	}, []);
 
-	// Precompute randomized overlay particles ONCE per decor so re-renders don't reset animations
+	// Precompute randomized overlay particles only after mount to keep SSR/CSR markup identical
 	const hearts = useMemo(() => {
-		const count = decor.includes("hearts") ? 16 : 0;
+		if (!mounted || !decor.includes("hearts")) return [] as Array<any>;
+		const count = 16;
 		return Array.from({ length: count }, (_, i) => ({
 			key: `h-${i}`,
 			left: `${Math.round(Math.random() * 100)}%`,
@@ -128,10 +133,11 @@ const GalaxyBackground = ({ variant = "dark", decor = "none" }: GalaxyBackground
 			size: `${12 + Math.round(Math.random() * 10)}px`,
 			amp: `${Math.round(10 + Math.random() * 18)}px`,
 		}));
-	}, [decor]);
+	}, [decor, mounted]);
 
 	const petals = useMemo(() => {
-		const count = decor.includes("petals") ? 14 : 0;
+		if (!mounted || !decor.includes("petals")) return [] as Array<any>;
+		const count = 14;
 		return Array.from({ length: count }, (_, i) => ({
 			key: `p-${i}`,
 			left: `${Math.round(Math.random() * 100)}%`,
@@ -142,7 +148,7 @@ const GalaxyBackground = ({ variant = "dark", decor = "none" }: GalaxyBackground
 			sway: `${Math.round(16 + Math.random() * 26)}px`,
 			tilt: `${Math.round(10 + Math.random() * 16)}deg`,
 		}));
-	}, [decor]);
+	}, [decor, mounted]);
 
 	return (
 		<div className={`galaxy-background ${variant === "light" ? "light" : ""}`} aria-hidden>
