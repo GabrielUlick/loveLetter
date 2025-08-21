@@ -480,9 +480,9 @@
   100% { transform: translate(0, 0) scale(1); top: 0; left: 0; width: 100%; height: 100%; opacity: 1; }
 }
 .letter-transition { position: fixed; background: white; z-index: 50; transform-origin: center; animation: letter-transition 1.2s ease-out forwards; }
-@keyframes type-text { 0% { opacity: 0; } 100% { opacity: 1; } }
-.typing-text { display: inline-block; opacity: 0; }
-.typing-text.visible { animation: type-text var(--type-dur, 0.12s) ease-out var(--type-delay, 0s) forwards; }
+/* simple baseline for typing text: JS controls visibility. No keyframed blinking animation. */
+.typing-text { display: inline-block; opacity: 0; transform: translateY(4px); transition: opacity 180ms linear, transform 220ms ease; }
+.typing-text.visible { opacity: 1; transform: translateY(0); }
 @keyframes fade-in { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 .animate-fade-in { animation: fade-in 0.5s ease-out forwards; }
 
@@ -516,6 +516,87 @@
 .balloon.b2 { background: #ffd1dc; animation: balloon-rise 12s ease-in-out infinite; }
 .balloon.b3 { background: #c7a4ff; animation: balloon-rise 14s ease-in-out infinite; }
 @keyframes balloon-rise { 0% { transform: translateY(0); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0); } }
+
+/* === Carta (letter) romantic styles === */
+.carta-paper {
+  background: linear-gradient(180deg, rgba(255, 248, 250, 0.06), rgba(255, 240, 245, 0.02));
+  border: 1px solid rgba(255, 209, 220, 0.12);
+  border-radius: 16px;
+  padding: 2.25rem 2.5rem; /* a bit larger on desktop */
+  box-shadow: 0 18px 40px rgba(17, 12, 20, 0.56), inset 0 1px 0 rgba(255,255,255,0.02);
+  position: relative;
+  overflow: visible;
+  width: 100%;
+  max-width: 880px; /* larger card on desktop */
+}
+.carta-paper::before {
+  /* subtle paper fleck texture via layered radial gradients */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(255,255,255,0.015) 0, transparent 8%),
+    radial-gradient(circle at 80% 70%, rgba(255,255,255,0.01) 0, transparent 6%),
+    radial-gradient(circle at 50% 50%, rgba(255,240,245,0.02) 0, transparent 20%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+.carta-title {
+  font-family: 'Segoe Script', 'Brush Script MT', 'Dancing Script', cursive;
+  font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+  color: var(--aero-champagne);
+  text-shadow: 0 4px 14px rgba(255, 122, 182, 0.25);
+  letter-spacing: 0.4px;
+}
+.carta-paragraph {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(0.98rem, 1.8vw, 1.04rem);
+  color: rgba(255, 225, 235, 0.98);
+  line-height: 1.62; /* slightly tighter for better reading rhythm */
+  text-align: justify;
+  text-justify: inter-word;
+  margin: 0 0 0.9rem 0;
+  text-indent: 1.05rem; /* classic paragraph indent */
+  letter-spacing: 0.1px;
+  max-width: 66ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+.carta-signature {
+  font-family: 'Segoe Script', 'Brush Script MT', 'Dancing Script', cursive;
+  font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+  color: var(--primary-soft);
+  margin-top: 1rem;
+  text-align: right;
+  display: block;
+  text-shadow: 0 4px 18px rgba(255, 122, 182, 0.18);
+}
+.heart-divider {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin: 0.5rem 0;
+}
+.heart-divider svg { width: 18px; height: 16px; filter: drop-shadow(0 2px 6px rgba(255,122,182,0.18)); }
+
+/* Provide a tiny in-page SVG gradient via data URI if needed */
+.heart-divider svg path { fill: url(#g); }
+
+/* make typing text look a bit softer on carta */
+.carta-paper .typing-text { color: inherit; opacity: 0; display: inline-block; transform: translateY(6px) skewX(-2deg); transition: transform 260ms ease, opacity 220ms linear; }
+.carta-paper .typing-text.visible { opacity: 1; transform: translateY(0) skewX(0deg); }
+
+/* Responsive adjustments: smaller card on narrow screens */
+@media (max-width: 640px) {
+  .carta-paper {
+    padding: 1rem 1rem;
+    max-width: 92vw;
+    border-radius: 12px;
+  }
+  .carta-title { font-size: clamp(1.2rem, 4.4vw, 1.6rem); }
+  .carta-paragraph { font-size: clamp(0.95rem, 3.6vw, 1rem); line-height: 1.6; max-width: 88vw; text-indent: 0.8rem; }
+  .heart-divider { margin: 0.5rem 0; }
+}
 
 /* General UI helpers and components */
 @keyframes pulse-soft { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
