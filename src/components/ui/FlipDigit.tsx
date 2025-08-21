@@ -11,7 +11,6 @@ const FlipDigit = ({ value, label, showSeparator = false }: FlipDigitProps) => {
     <div className="time-group">
       <div className="digit-container">
         <div className="digit">{formattedValue}</div>
-        {showSeparator && <span className="separator">:</span>}
       </div>
       <div className="label">{label}</div>
     </div>
