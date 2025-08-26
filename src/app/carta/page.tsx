@@ -36,28 +36,40 @@ const Carta = () => {
   
   const words = useMemo(() => textoConst.map((w, i) => ({ id: `w-${i}-${w}`, word: w })), []);
 
-  // Reveal words one-by-one to simulate writing
-  useEffect(() => {
+  // Calculate typing animation delays outside component
+  const calculateAnimationDelays = (words: string[]): number[] => {
     const charMs = 26; // ms per character
     const gapMs = 120; // short gap between words
     const baseDelay = 300; // initial delay before starting
-    const timeouts: number[] = [];
+    
+    return words.reduce<number[]>((acc, word) => {
+      const prev = acc[acc.length - 1] || baseDelay;
+      const dur = Math.max(60, word.length * charMs);
+      acc.push(prev + dur + gapMs);
+      return acc;
+    }, [baseDelay]);
+  };
 
-    let time = baseDelay;
-    textoConst.forEach((w, i) => {
-      const dur = Math.max(60, w.length * charMs);
-      const t1 = window.setTimeout(() => {
-        setVisibleWords((prev) => [...prev, i]);
-      }, time);
-      timeouts.push(t1);
-      time += dur + gapMs;
+  // Reveal words one-by-one to simulate writing
+  useEffect(() => {
+    const timeouts: number[] = [];
+    const delays = calculateAnimationDelays(textoConst);
+
+    // Add word to visible list
+    const showWord = (index: number) => {
+      setVisibleWords(prev => [...prev, index]);
+    };
+
+    // Schedule all animations
+    delays.forEach((delay, index) => {
+      timeouts.push(window.setTimeout(() => showWord(index), delay));
     });
 
-    // Show button shortly after last word
-    const tEnd = window.setTimeout(() => setShowButton(true), time + 180);
-    timeouts.push(tEnd);
+    // Show button after all words
+    const finalDelay = delays[delays.length - 1] + 180;
+    timeouts.push(window.setTimeout(() => setShowButton(true), finalDelay));
 
-    return () => timeouts.forEach((id) => clearTimeout(id));
+    return () => timeouts.forEach(clearTimeout);
   }, []);
 
   return (
@@ -79,15 +91,26 @@ const Carta = () => {
               const display: 'block' | 'inline' = 'block';
               // Animation: speed up typing (was 50ms/char + 100ms, now 28ms/char + 60ms)
               const delayMs = textoConst.slice(0, index).reduce((acc, w) => acc + (w.length * 28 + 60), 0);
-              const styleVars: React.CSSProperties & { ['--type-delay']?: string; ['--type-dur']?: string } = {
+              const styleVars: React.CSSProperties & { 
+                ['--type-delay']: string;
+                ['--type-dur']: string;
+              } = {
                 ['--type-delay']: `${350 + delayMs}ms`,
                 ['--type-dur']: `${Math.max(80, word.length * 28)}ms`,
-                fontSize, fontWeight, display,
-              } as any;
+                fontSize, 
+                fontWeight, 
+                display,
+              };
+              const getTextClass = () => {
+                if (isTitle) return 'carta-title';
+                if (isSignature) return 'carta-signature';
+                return 'carta-paragraph';
+              };
+              
               return (
                 <span key={id} className={isTitle ? "block text-center" : "block text-justify"}>
                     <span 
-                      className={`typing-text ${visibleWords.includes(index) ? 'visible' : ''} ${isTitle ? 'carta-title' : isSignature ? 'carta-signature' : 'carta-paragraph'}`}
+                      className={`typing-text ${visibleWords.includes(index) ? 'visible' : ''} ${getTextClass()}`}
                       style={styleVars}
                     >
                       {word}

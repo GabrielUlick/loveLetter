@@ -12,6 +12,7 @@ const FlipDigit = ({ value, label, showSeparator = false }: FlipDigitProps) => {
       <div className="digit-container">
         <div className="digit">{formattedValue}</div>
       </div>
+      {showSeparator && <div className="separator" aria-hidden>:</div>}
       <div className="label">{label}</div>
     </div>
   );

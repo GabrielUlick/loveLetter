@@ -1,4 +1,5 @@
 "use client";
+import React from 'react';
 
 export default function CronoDecor() {
   return (
@@ -10,7 +11,8 @@ export default function CronoDecor() {
       <div className="garland">
         {Array.from({ length: 10 }).map((_, i) => {
           const id = `g-${i}`;
-          return <span className="garland-heart" key={id} style={{ ['--i' as any]: i }} />;
+          const style = { ['--i']: i } as React.CSSProperties & Record<string, number>;
+          return <span className="garland-heart" key={id} style={style} />;
         })}
       </div>
 
