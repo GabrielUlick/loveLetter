@@ -19,7 +19,7 @@ const textoConst = [
   "Eu nunca tinha vivido algo tão intenso e verdadeiro… e agora sei o que realmente significa ser feliz: é ver você sorrindo, é ver você realizada, é ver você bem.",
   // Parágrafo 3
   "Meu amor, eu te amo de uma forma que nem as palavras conseguem explicar.",
-  "Quero muitos e muitos anos ao seu lado, quero realizar todos os nossos sonhos: nossa casinha, nossas motinhas, nossos filhos… tudo aquilo que já imaginamos juntos.",
+  "Quero muitos e muitos anos ao seu lado, quero realizar todos os nossos sonhos: nossa casinha, nossas motinhas, nossos nenês… tudo aquilo que já imaginamos juntos.",
   "Eu te prometo: tudo isso vai se concretizar, porque meu coração já pertence a você para sempre.",
   // Parágrafo 4
   "Você é simplesmente maravilhosa, a melhor parte da minha vida.",
