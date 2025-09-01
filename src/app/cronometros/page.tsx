@@ -30,35 +30,66 @@ const Cronometros = () => {
 
   const calculateTime = (startDate: Date): TimeCount => {
     const now = new Date();
-    const diff = now.getTime() - startDate.getTime();
-    
-    const seconds = Math.floor(diff / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
-    
-    let monthsTotal = (now.getFullYear() - startDate.getFullYear()) * 12;
-    monthsTotal += now.getMonth() - startDate.getMonth();
-    
-    const years = Math.floor(monthsTotal / 12);
-    const months = monthsTotal % 12;
+    // If the start date is in the future, clamp to zero.
+    if (now < startDate) {
+      return { years: 0, months: 0, days: 0, hours: 0, minutes: 0, seconds: 0 };
+    }
 
-    return {
-      years,
-      months,
-      days: days % 30,
-      hours: hours % 24,
-      minutes: minutes % 60,
-      seconds: seconds % 60
-    };
+    let years = now.getFullYear() - startDate.getFullYear();
+    let months = now.getMonth() - startDate.getMonth();
+
+    // Adjust if month/day/time hasn't reached yet this year
+    // Determine if we've passed the day/time within the current month
+    const hasReachedDayTime = (
+      now.getDate() > startDate.getDate() ||
+      (
+        now.getDate() === startDate.getDate() && (
+          now.getHours() > startDate.getHours() ||
+          (now.getHours() === startDate.getHours() && (
+            now.getMinutes() > startDate.getMinutes() ||
+            (now.getMinutes() === startDate.getMinutes() && now.getSeconds() >= startDate.getSeconds())
+          ))
+        )
+      )
+    );
+
+    // Raw month difference
+    if (months < 0) {
+      years -= 1;
+      months += 12;
+    }
+
+    // If we haven't yet reached the day/time for this month, subtract one month
+    if (!hasReachedDayTime) {
+      months -= 1;
+      if (months < 0) {
+        months += 12;
+        years -= 1;
+      }
+    }
+
+    // Anchor date = startDate + years + months
+    const anchor = new Date(startDate);
+    anchor.setFullYear(startDate.getFullYear() + years);
+    anchor.setMonth(startDate.getMonth() + months);
+
+    const remainingMs = now.getTime() - anchor.getTime();
+    const secTotal = Math.floor(remainingMs / 1000);
+    const seconds = secTotal % 60;
+    const minTotal = Math.floor(secTotal / 60);
+    const minutes = minTotal % 60;
+    const hourTotal = Math.floor(minTotal / 60);
+    const hours = hourTotal % 24;
+    const dayTotal = Math.floor(hourTotal / 24);
+    const days = dayTotal; // days remaining after removing full months
+
+    return { years, months, days, hours, minutes, seconds };
   };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      const newTimes = dates.map(({ date }) => calculateTime(date));
-      setTimes(newTimes);
-    }, 1000);
-
+    const tick = () => setTimes(dates.map(({ date }) => calculateTime(date)));
+    tick(); // initial immediate update so it doesn't start at 0
+    const interval = setInterval(tick, 1000);
     return () => clearInterval(interval);
   }, []);
 
