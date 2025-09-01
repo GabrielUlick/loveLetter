@@ -21,6 +21,15 @@ const dates = [
   { date: new Date('2025-08-01T16:40:13'), label: 'Primeira Viagem' }
 ];
 
+// Formata apenas a data (sem horas) em PT-BR (ex: 05 de Setembro de 2024)
+const formatRomanticDate = (d: Date) => {
+  const day = d.getDate().toString().padStart(2, '0');
+  const monthName = d.toLocaleDateString('pt-BR', { month: 'long' });
+  const year = d.getFullYear();
+  const monthPretty = monthName.charAt(0).toUpperCase() + monthName.slice(1);
+  return `${day} de ${monthPretty} de ${year}`;
+};
+
 const Cronometros = () => {
   const [times, setTimes] = useState<TimeCount[]>([
     { years: 0, months: 0, days: 0, hours: 0, minutes: 0, seconds: 0 },
@@ -103,12 +112,19 @@ const Cronometros = () => {
           Nossa História em Números
         </h1>
         <div className="flex flex-col gap-6 sm:gap-8">
-          {dates.map(({ label }, index) => (
+          {dates.map(({ label, date }, index) => (
             <div
               key={label}
               className="flip-clock"
             >
               <h2 className="text-xl sm:text-2xl md:text-3xl font-light mb-8 sm:mb-10 md:mb-12 text-pink-200/80 text-center tracking-wider">{label}</h2>
+              <p className="text-center -mt-6 mb-6 sm:mb-8 text-pink-100/80 text-[0.75rem] sm:text-sm md:text-base tracking-wide leading-relaxed">
+                <span className="inline-block px-3 py-1 rounded-full bg-pink-300/10 backdrop-blur-sm shadow-inner shadow-pink-400/10 border border-pink-300/20">
+                  <span className="animate-pulse-slow mr-1" aria-hidden>❤</span>{' '}
+                  Desde <span className="font-semibold text-pink-100">{formatRomanticDate(date)}</span>
+                  <span className="ml-1 animate-pulse-slow" aria-hidden>❤</span>
+                </span>
+              </p>
               <div className="timer-row">
                 <FlipDigit value={times[index].years} label="ANOS" />
                 <FlipDigit value={times[index].months} label="MESES" />
